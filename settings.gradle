@@ -1,0 +1,13 @@
+rootProject.name = 'boot-time-management'
+
+include ':boot-modules'
+project(':boot-modules').projectDir = new File(settingsDir, '../boot-modules')
+
+include ':boot-auth'
+project(':boot-auth').projectDir = new File(settingsDir, '../boot-auth')
+
+include ':boot-core'
+project(':boot-core').projectDir = new File(settingsDir, '../boot-core')
+
+
+
