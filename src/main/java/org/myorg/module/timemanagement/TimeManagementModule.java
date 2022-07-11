@@ -11,7 +11,6 @@ import org.myorg.module.timemanagement.privilege.ActivityPrivilege;
 import org.myorg.modules.modules.BootModule;
 import org.myorg.modules.modules.Module;
 import org.myorg.modules.modules.exception.ModuleException;
-import org.myorg.modules.utils.ContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +50,7 @@ public class TimeManagementModule extends Module implements Application {
     public boolean isUserHasAccess(long userId) throws ModuleException {
         String key = ActivityPrivilege.INSTANCE.getKey();
 
-        Set<AccessRoleDto> accessRoles = userService.findAllAccessRoles(userId, ContextUtils.createSystemContext());
+        Set<AccessRoleDto> accessRoles = userService.findAllAccessRoles(userId);
         for (AccessRoleDto accessRole : accessRoles) {
             for (PrivilegeDto privilege : accessRole.getPrivileges()) {
                 if (Objects.equals(privilege.getKey(), key)
