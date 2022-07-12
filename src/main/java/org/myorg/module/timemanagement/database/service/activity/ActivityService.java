@@ -14,6 +14,7 @@ import org.myorg.modules.modules.exception.ModuleException;
 import org.myorg.modules.modules.exception.ModuleExceptionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
@@ -69,18 +70,21 @@ public class ActivityService extends DomainObjectService<DbActivity, ActivityDAO
         return dtoBuilder.apply(dao.makePersistent(dbActivity));
     }
 
+    @Transactional(readOnly = true)
     public Set<ActivityDto> findAllByUserId(long userId) {
         return dao.findAllByUserId(userId).stream()
                 .map(dtoBuilder)
                 .collect(Collectors.toSet());
     }
 
+    @Transactional(readOnly = true)
     public Set<ActivityInstantDto> findAllInstants(long activityId) {
         return activityInstantDAO.findAllByActivityId(activityId).stream()
                 .map(ActivityInstantDto::from)
                 .collect(Collectors.toSet());
     }
 
+    @Transactional
     public ActivityInstantDto setTime(long activityId, @NotNull Date date) throws ModuleException {
         List<DbActivityInstant> instantsSorted = activityInstantDAO.findAllByActivityId(activityId).stream()
                 .sorted(Comparator.comparing(DbActivityInstant::getStartDatetime))

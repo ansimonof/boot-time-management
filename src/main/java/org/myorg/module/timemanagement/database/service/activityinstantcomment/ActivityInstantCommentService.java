@@ -10,6 +10,7 @@ import org.myorg.modules.modules.exception.ModuleException;
 import org.myorg.modules.modules.exception.ModuleExceptionBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class ActivityInstantCommentService extends
         this.activityInstantDAO = activityInstantDAO;
     }
 
+    @Transactional(readOnly = true)
     public Set<ActivityInstantCommentDto> findAllByActivityInstantId(long activityInstantId) {
         return dao.execNamedQuery(
                 DbActivityInstantComment.QUERY_FIND_ALL_BY_FK_ACTIVITY_INSTANT, new HashMap<String, Object>() {{

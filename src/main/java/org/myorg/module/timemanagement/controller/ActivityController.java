@@ -44,7 +44,8 @@ public class ActivityController {
             ops = { AccessOp.READ }
     )
     public ResponseEntity<Set<ActivityDto>> list(
-            final Context<?> context) throws ModuleException {
+            final Context<?> context
+    ) throws ModuleException {
         if (!(context.getSource() instanceof CoreUserSource)) {
             throw AuthExceptionBuilder.buildInvalidRequestSourceException(
                     context.getSource().getClass(), CoreUserSource.class);
